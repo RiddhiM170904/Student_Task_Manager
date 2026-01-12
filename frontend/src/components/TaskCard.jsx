@@ -11,6 +11,16 @@ function TaskCard({ task, onToggleComplete, onEdit, onDelete }) {
     });
   };
 
+  const formatTime = (timeString) => {
+    if (!timeString) return null;
+    
+    // Handle both "HH:MM" and "HH:MM:SS" formats
+    const [hours, minutes] = timeString.split(':');
+    const hour12 = hours % 12 || 12;
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    return `${hour12}:${minutes} ${ampm}`;
+  };
+
   const isOverdue = () => {
     return !task.completed && new Date(task.dueDate) < new Date();
   };
@@ -60,6 +70,15 @@ function TaskCard({ task, onToggleComplete, onEdit, onDelete }) {
                 {isOverdue() && ' (Overdue)'}
               </span>
             </motion.div>
+            {task.dueTime && (
+              <motion.div
+                className="task-meta-item"
+                whileHover={{ scale: 1.05 }}
+              >
+                <FiClock />
+                <span>{formatTime(task.dueTime)}</span>
+              </motion.div>
+            )}
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

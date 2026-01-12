@@ -8,6 +8,7 @@ function EditTaskModal({ task, onSubmit, onClose }) {
     description: task.description || '',
     priority: task.priority,
     dueDate: task.dueDate ? task.dueDate.split('T')[0] : '',
+    dueTime: task.dueTime || '',
     completed: task.completed,
   });
 
@@ -145,6 +146,25 @@ function EditTaskModal({ task, onSubmit, onClose }) {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
+            >
+              <label htmlFor="dueTime" className="form-label">
+                Due Time
+              </label>
+              <input
+                type="time"
+                id="dueTime"
+                name="dueTime"
+                className="form-input"
+                value={formData.dueTime}
+                onChange={handleChange}
+              />
+            </motion.div>
+
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.35 }}
             >
               <label style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', cursor: 'pointer' }}>
                 <input

@@ -74,7 +74,7 @@ export const getTask = async (req, res) => {
 // @access  Private
 export const createTask = async (req, res) => {
   try {
-    const { title, description, priority, dueDate } = req.body;
+    const { title, description, priority, dueDate, dueTime } = req.body;
     
     // Validation
     if (!title || !dueDate) {
@@ -89,6 +89,7 @@ export const createTask = async (req, res) => {
       description,
       priority: priority || 'medium',
       dueDate,
+      dueTime,
       userId: req.user._id,
     });
     

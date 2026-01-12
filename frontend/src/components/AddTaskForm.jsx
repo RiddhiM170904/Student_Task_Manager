@@ -8,6 +8,7 @@ function AddTaskForm({ onSubmit, onClose }) {
     description: '',
     priority: 'medium',
     dueDate: '',
+    dueTime: '',
   });
 
   const handleChange = (e) => {
@@ -137,6 +138,26 @@ function AddTaskForm({ onSubmit, onClose }) {
                 required
               />
             </motion.div>
+
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <label htmlFor="dueTime" className="form-label">
+                Due Time
+              </label>
+              <input
+                type="time"
+                id="dueTime"
+                name="dueTime"
+                className="form-input"
+                value={formData.dueTime}
+                onChange={handleChange}
+              />
+            </motion.div>
+
 
           <div className="modal-actions">
             <motion.button
