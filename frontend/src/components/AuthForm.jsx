@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiMail, FiLock, FiUser, FiCheckSquare } from 'react-icons/fi';
 
 function AuthForm({ onLogin, onSignup }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -46,18 +48,50 @@ function AuthForm({ onLogin, onSignup }) {
 
   return (
     <div className="auth-container">
-      <div className="auth-box">
+      <motion.div
+        className="auth-box"
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", duration: 0.7 }}
+      >
         <div className="auth-header">
-          <h1>📝 Student Task Manager</h1>
-          <p>{isLogin ? 'Welcome back! Please login to continue.' : 'Create your account to get started.'}</p>
+          <motion.h1
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <motion.span
+              animate={{ rotate: [0, -10, 10, -10, 0] }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <FiCheckSquare style={{ display: 'inline', marginRight: '0.5rem' }} />
+            </motion.span>
+            Student Task Manager
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            key={isLogin}
+          >
+            {isLogin ? 'Welcome back! Please login to continue.' : 'Create your account to get started.'}
+          </motion.p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
-          {!isLogin && (
-            <div className="form-group">
-              <label htmlFor="name" className="form-label">
-                Name
-              </label>
+          <AnimatePresence mode="wait">
+            {!isLogin && (
+              <motion.div
+                className="form-group"
+                initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+                animate={{ opacity: 1, height: 'auto', marginBottom: '1.5rem' }}
+                exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <label htmlFor="name" className="form-label">
+                  <FiUser style={{ display: 'inline', marginRight: '0.5rem' }} />
+                  Name
+                </label>
               <input
                 type="text"
                 id="name"
@@ -68,11 +102,18 @@ function AuthForm({ onLogin, onSignup }) {
                 placeholder="Enter your name"
                 required={!isLogin}
               />
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-          <div className="form-group">
+          <motion.div
+            className="form-group"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
             <label htmlFor="email" className="form-label">
+              <FiMail style={{ display: 'inline', marginRight: '0.5rem' }} />
               Email
             </label>
             <input
@@ -85,10 +126,16 @@ function AuthForm({ onLogin, onSignup }) {
               placeholder="Enter your email"
               required
             />
-          </div>
+          </motion.div>
 
-          <div className="form-group">
+          <motion.div
+            className="form-group"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
             <label htmlFor="password" className="form-label">
+              <FiLock style={{ display: 'inline', marginRight: '0.5rem' }} />
               Password
             </label>
             <input
@@ -103,40 +150,59 @@ function AuthForm({ onLogin, onSignup }) {
               required
             />
             {!isLogin && (
-              <small style={{ color: 'var(--text-light)', fontSize: '0.8rem' }}>
+              <small style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', display: 'block', marginTop: '0.5rem' }}>
                 Password must be at least 6 characters
               </small>
             )}
-          </div>
+          </motion.div>
 
-          {error && (
-            <div className="error-message">
-              {error}
-            </div>
-          )}
+          <AnimatePresence mode="wait">
+            {error && (
+              <motion.div
+                className="error-message"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+              >
+                {error}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-          <button 
-            type="submit" 
+          <motion.button
+            type="submit"
             className="btn btn-primary auth-submit"
             disabled={loading}
+            whileHover={{ scale: loading ? 1 : 1.02 }}
+            whileTap={{ scale: loading ? 1 : 0.98 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
           >
             {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Sign Up')}
-          </button>
+          </motion.button>
         </form>
 
-        <div className="auth-toggle">
+        <motion.div
+          className="auth-toggle"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+        >
           <p>
             {isLogin ? "Don't have an account? " : 'Already have an account? '}
-            <button 
-              type="button" 
-              className="auth-toggle-btn" 
+            <motion.button
+              type="button"
+              className="auth-toggle-btn"
               onClick={toggleMode}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               {isLogin ? 'Sign Up' : 'Login'}
-            </button>
+            </motion.button>
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

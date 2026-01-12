@@ -26,6 +26,18 @@ _Add your screenshots here after deployment_
 - ✅ **Persistent Storage**: All tasks stored in MongoDB Atlas
 - ✅ **Real-time Updates**: UI updates immediately after any action
 
+### Professional UI/UX Features
+- ✅ **Dark/Light Theme Toggle**: Switch between dark and light modes with localStorage persistence
+- ✅ **Modern Animations**: Smooth transitions and micro-interactions using Framer Motion
+- ✅ **Statistics Dashboard**: Visual overview of total, completed, pending, and overdue tasks
+- ✅ **Progress Tracking**: Animated progress bar showing task completion percentage
+- ✅ **Toast Notifications**: Professional success/error messages instead of alerts
+- ✅ **Confirmation Modals**: Beautiful confirmation dialogs for destructive actions
+- ✅ **Glassmorphism Effects**: Modern frosted glass UI elements
+- ✅ **Gradient Accents**: Eye-catching gradient overlays and buttons
+- ✅ **Icon Integration**: React Icons (Feather Icons) for consistent iconography
+- ✅ **Custom Scrollbar**: Styled scrollbar matching the theme
+
 ### Authentication & Security (Fully Implemented)
 - ✅ **User Signup/Login**: JWT-based authentication system
 - ✅ **Private Tasks**: Each user has their own isolated task list
@@ -47,7 +59,9 @@ _Add your screenshots here after deployment_
 - **React 18** - UI library
 - **Vite** - Build tool and dev server
 - **Axios** - HTTP client
-- **CSS3** - Custom styling (no framework dependencies)
+- **Framer Motion** - Animation library
+- **React Icons** - Icon library
+- **CSS3** - Custom styling with CSS variables for theming
 
 ### Backend
 - **Node.js** - Runtime environment

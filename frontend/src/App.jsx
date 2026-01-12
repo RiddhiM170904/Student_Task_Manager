@@ -5,7 +5,10 @@ import AddTaskForm from './components/AddTaskForm';
 import EditTaskModal from './components/EditTaskModal';
 import FilterBar from './components/FilterBar';
 import AuthForm from './components/AuthForm';
+import Dashboard from './components/Dashboard';
+import ConfirmModal from './components/ConfirmModal';
 import { getTasks, createTask, updateTask, deleteTask, login, signup } from './api/api';
+import { useToast } from './context/ToastContext';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -17,6 +20,8 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const toast = useToast();
 
   useEffect(() => {
     // Check if user is logged in
@@ -43,7 +48,7 @@ function App() {
         // Token expired or invalid
         handleLogout();
       } else {
-        alert('Failed to fetch tasks. Please try again.');
+        toast.error('Failed to fetch tasks. Please try again.');
       }
     } finally {
       setLoading(false);
@@ -116,13 +121,14 @@ function App() {
       const data = await createTask(taskData);
       setTasks([data.data, ...tasks]);
       setShowAddForm(false);
+      toast.success('Task created successfully!');
     } catch (error) {
       console.error('Error creating task:', error);
       if (error.response?.status === 401) {
         handleLogout();
-        alert('Session expired. Please login again.');
+        toast.error('Session expired. Please login again.');
       } else {
-        alert('Failed to create task. Please try again.');
+        toast.error('Failed to create task. Please try again.');
       }
     }
   };
@@ -132,13 +138,14 @@ function App() {
       const data = await updateTask(id, taskData);
       setTasks(tasks.map(task => task._id === id ? data.data : task));
       setEditingTask(null);
+      toast.success('Task updated successfully!');
     } catch (error) {
       console.error('Error updating task:', error);
       if (error.response?.status === 401) {
         handleLogout();
-        alert('Session expired. Please login again.');
+        toast.error('Session expired. Please login again.');
       } else {
-        alert('Failed to update task. Please try again.');
+        toast.error('Failed to update task. Please try again.');
       }
     }
   };
@@ -147,32 +154,34 @@ function App() {
     try {
       const data = await updateTask(task._id, { ...task, completed: !task.completed });
       setTasks(tasks.map(t => t._id === task._id ? data.data : t));
+      toast.success(data.data.completed ? 'Task marked as completed! 🎉' : 'Task marked as pending');
     } catch (error) {
       console.error('Error toggling task:', error);
       if (error.response?.status === 401) {
         handleLogout();
-        alert('Session expired. Please login again.');
+        toast.error('Session expired. Please login again.');
       } else {
-        alert('Failed to update task. Please try again.');
+        toast.error('Failed to update task. Please try again.');
       }
     }
   };
 
-  const handleDeleteTask = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this task?')) {
-      return;
-    }
+  const handleDeleteTask = (id) => {
+    setDeleteConfirm(id);
+  };
 
+  const confirmDelete = async () => {
     try {
-      await deleteTask(id);
-      setTasks(tasks.filter(task => task._id !== id));
+      await deleteTask(deleteConfirm);
+      setTasks(tasks.filter(task => task._id !== deleteConfirm));
+      toast.success('Task deleted successfully');
     } catch (error) {
       console.error('Error deleting task:', error);
       if (error.response?.status === 401) {
         handleLogout();
-        alert('Session expired. Please login again.');
+        toast.error('Session expired. Please login again.');
       } else {
-        alert('Failed to delete task. Please try again.');
+        toast.error('Failed to delete task. Please try again.');
       }
     }
   };
@@ -234,6 +243,8 @@ function App() {
       />
       
       <div className="container">
+        <Dashboard tasks={tasks} />
+        
         <FilterBar
           filter={filter}
           setFilter={setFilter}
@@ -272,6 +283,14 @@ function App() {
           onClose={() => setEditingTask(null)}
         />
       )}
+
+      <ConfirmModal
+        isOpen={deleteConfirm !== null}
+        onClose={() => setDeleteConfirm(null)}
+        onConfirm={confirmDelete}
+        title="Delete Task?"
+        message="Are you sure you want to delete this task? This action cannot be undone."
+      />
     </div>
   );
 }
