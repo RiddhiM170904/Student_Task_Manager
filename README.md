@@ -6,12 +6,14 @@ A full-stack task management web application built with the MERN stack, demonstr
 
 ## 🚀 Live Demo
 
-- **Frontend**: [https://your-app.vercel.app](https://your-app.vercel.app) _(Deploy to Vercel)_
-- **Backend API**: [https://your-api.render.com](https://your-api.render.com) _(Deploy to Render)_
+- **Frontend**: [https://student-task-manager-eight-murex.vercel.app/](https://student-task-manager-eight-murex.vercel.app/)
+- **Backend API**: [https://student-task-manager-t9lx.onrender.com/](https://student-task-manager-t9lx.onrender.com/)
 
 ## 📸 Screenshots
+<img width="1919" height="966" alt="image" src="https://github.com/user-attachments/assets/a307f61e-3d0d-4930-a5ff-66e0cb526aee" />
+<img width="1919" height="656" alt="image" src="https://github.com/user-attachments/assets/dce96fd3-1c0e-4a3c-ab1d-2401a96409fc" />
 
-_Add your screenshots here after deployment_
+
 
 ## ✨ Features
 
