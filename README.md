@@ -1,5 +1,5 @@
 # 📝 Student Task Manager
-
+## Completed the project
 A full-stack task management web application built with the MERN stack, demonstrating end-to-end development skills including CRUD operations, state management, API integration, authentication, and responsive design.
 
 ![Student Task Manager](https://via.placeholder.com/800x400/4f46e5/ffffff?text=Student+Task+Manager)
